@@ -24,7 +24,10 @@ router.post('/', async (req, res, next) => {
 			subject: 'English Lit',
 			grade: 90
 		});
-		res.json(newStudent);
+
+		const studentAndTest = await Student.findByPk(newStudent.id, {include: [ {model: Test} ]});
+
+		res.json(studentAndTest);
 	} catch (err) {
 		next(err);
 	}
