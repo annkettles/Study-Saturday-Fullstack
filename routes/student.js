@@ -18,6 +18,12 @@ router.get('/', function(req, res, next) {
 router.post('/', async (req, res, next) => {
 	try {
 		const newStudent = await Student.create(req.body);
+		//after newStudent is created, must create a new Test and attach the studentId to the Test.
+		Test.create({
+			studentId: newStudent.id,
+			subject: 'English Lit',
+			grade: 90
+		});
 		res.json(newStudent);
 	} catch (err) {
 		next(err);
